@@ -1,5 +1,5 @@
 # JigSass Objects Lists
-[![NPM version][npm-image]][npm-url]  [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]   
+[![NPM version][npm-image]][npm-url]  [![Dependency Status][daviddm-image]][daviddm-url]   
 
 JigSass Lists is a collection of unopinionated, unstyled, ui abstractions for displaying lists.
 
@@ -136,7 +136,5 @@ In addition, any file in `sgSrc/assets` will be available for use in the style g
 [npm-image]: https://badge.fury.io/js/jigsass-objects-lists.svg
 [npm-url]: https://npmjs.org/package/jigsass-objects-lists
 
-[travis-image]: https://travis-ci.org/TxHawks/jigsass-objects-lists.svg?branch=master
-[travis-url]: https://travis-ci.org/TxHawks/jigsass-objects-lists
 [daviddm-image]: https://david-dm.org/TxHawks/jigsass-objects-lists.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/TxHawks/jigsass-objects-lists
