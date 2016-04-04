@@ -4,4 +4,4 @@
 gulp sass:sg
 git add ./docs/styleguide/.
 git commit -m "Compile documentation"
-git subtree push --prefix docs origin gh-pages
+git subtree push --prefix docs/styleguide origin gh-pages
