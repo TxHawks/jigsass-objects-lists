@@ -1,0 +1,198 @@
+// *************************************
+//
+// # Inline List
+// -> Inline list items side by side.
+//
+////
+/// @group Lists
+////
+//
+// *************************************
+
+@charset 'UTF-8';
+
+
+// -------------------------------------
+// Dependencies
+// -------------------------------------
+
+// @if (check if dependency was imported) {
+//   @error '`jigsass-objects-lists` has a dependency on `****`. Please import it.'
+// }
+
+
+
+
+
+// -------------------------------------
+// Variables
+// -------------------------------------
+
+//
+
+
+
+
+
+// -------------------------------------
+// Functions
+// -------------------------------------
+
+//
+
+
+
+
+
+// -------------------------------------
+// Mixins
+// -------------------------------------
+
+//
+
+
+
+
+
+// -------------------------------------
+// Definitions
+// -------------------------------------
+
+@include jigsass-define-object(o-divided-list) {
+  // A vertically stacked list of items divided by lines.
+  //
+  // This object sets only very minimal styling and relies
+  // on being complemented with component and utility classes,
+  // e.g., [`.u-as`](https:txhawks.github.io/jigsass-utils-autospace/)
+  // for spacing items from one another.
+  // ---
+  // 1. List element can only hold list items.
+  //    Use universal selector to keep specificity low.
+  // 2.
+  // ---
+  @include jigsass-classname() {
+    $_br-width: nth($jigsass-lists-divided-border, 1);
+    $_br-lines: nth($jigsass-lists-divided-border, 2);
+    $_br-style: nth($jigsass-lists-divided-border, 3);
+    display: block;
+
+    > * + * {                  // [1]
+      @include jigsass-border-top($_br-width, $_br-lines, $_br-style);
+    }
+
+    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    @if (not index($_doclet-store, $_doclet)) {
+      // stylelint-disable
+  /* ---
+  section: Lists
+  title: Divided List
+  order: 7
+  ---
+  A vertically stacked list of items divided by lines.
+
+  This object sets only very minimal styling and relies on being complemented with
+  component and utility classes, e.g., [`.u-as`](https:txhawks.github.io/jigsass-utils-autospace/)
+  for spacing items from one another.
+
+
+  #### include with:
+  ```scss
+  @include jigsass-list(divided[, $modifier, $from, $until, $misc]);
+  ```
+
+
+  #### Related Mixins:
+  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
+  optionally limited to a specific breakpoint defined in
+  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+
+
+  #### Usage example:
+  ```example:html
+  <ul class='u-as--2 o-divided-list'>
+    <li>item 1</li>
+    <li>item 2</li>
+    <li>item 3</li>
+    <li>item 4</li>
+    <li>item 5</li>
+  </ul>
+  ```
+
+  ```scss
+  // --- In Sass --- //
+  @include jigsass-list(divided);
+  ```
+
+  ** CSS output: **
+
+  ```scss
+  // --- CSS --- //
+  .o-divided-list {
+    display: block;
+  }
+    .o-divided-list > * + * {
+      border-top: 1px;
+      padding-top: 11px;
+    }
+  ```
+  */
+    //stylelint-enable
+    }
+  }
+
+  @each $border-modifier in map-keys($jigsass-lists-divided-border-modifiers) {
+    @include jigsass-classname($modifier: $border-modifier) {
+      $modifier: $jigsass-obj-current-modifier;
+      $modifier-values: map-get($jigsass-lists-divided-border-modifiers, $modifier);
+
+      $_br-width: nth($modifier-values, 1);
+      $_br-lines: nth($modifier-values, 2);
+      $_br-style: nth($modifier-values, 3);
+
+      > * + * {
+        @include jigsass-border-top($_br-width, $_br-lines, $_br-style);
+      }
+
+      $_doclet: $_jigsass-obj-current-name + ($modifier or '');
+      @if (not index($_doclet-store, $_doclet)) {
+        // stylelint-disable
+  /* ---
+  section: Lists
+  title: Divided List (#{$modifier})
+  order: 8
+  ---
+  Modifies the default border and padding above list items in a `devided-list`.
+
+  #### include with:
+  ```scss
+  @include jigsass-list(divided, $modifier: #{$modifier}[, $from, $until, $misc]);
+  ```
+
+
+  #### Related Mixins:
+  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
+  optionally limited to a specific breakpoint defined in
+  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+
+
+  #### Usage example:
+  ```example:html
+  <ul class='u-as--#{$_br-lines}  [ o-divided-list o-divided-list--#{$modifier} ]'>
+    <li>item 1</li>
+    <li>item 2</li>
+    <li>item 3</li>
+    <li>item 4</li>
+    <li>item 5</li>
+  </ul>
+  ```
+
+  ```scss
+  // --- In Sass --- //
+  @include jigsass-list(divided, $modifier: #{$modifier});
+  ```
+  */
+      //stylelint-enable
+      }
+    }
+  }
+}

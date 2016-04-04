@@ -1,0 +1,104 @@
+/* ---
+section: List
+title: List mixin
+order: 0
+---
+```scss
+@mixin jigsass-list($abstraction, $modifier: false, $from: false, $until: false, $misc: false) { ... }
+```
+
+
+#### Description
+Generate a list abstraction or an abstraction's modifier,
+optionally limited to a specific breakpoint defined in
+[$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+
+
+#### Parameters
+Name | Description | Type | Default Value
+--- | --- | --- | ---
+`$abstraction` | A list abstraction (e.g., `bare`, `inline`, etc.) | `String`
+`$modifier` | A list-abstraction's modifier, e.g., `bare`, `inline`, etc.| `String` or `Boolean` | false
+`$from` | The name of breakpoint used as the min-width condition | `String` or `Boolean` | false
+`$until` | The name of breakpoint used as the max-width condition | `String` or `Boolean` | false
+`$misc` | The name of a miscellaneous media query condition | `String` or `Boolean` | false
+
+
+#### Example
+```scss
+@include jigsass-list(inline, $from: medium);
+```
+
+Will generate:
+```scss
+@media (min-width: 37.5em) {
+  .o-inline-list--from-medium { ... }
+}
+```
+*/
+html {
+  font-size: 37.5%;
+}
+
+body {
+  font-size: 2.6666666667em;
+  line-height: 4rem;
+}
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+.fpo {
+  background-color: #09a5d9;
+  border: 1px solid #0ab8f1;
+  box-sizing: border-box;
+  color: #fff;
+  margin-bottom: 4rem;
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.fpo--b,
+.fpo--c {
+  margin-bottom: 0;
+}
+
+.fpo--b {
+  background-color: #0892c1;
+}
+
+.fpo--c {
+  background-color: #0780a8;
+}
+
+.fpo--tall {
+  min-height: 25rem;
+}
+
+.fpo--fixed {
+  float: left;
+  width: 200px;
+}
+
+.u-fxb--200px {
+  -webkit-flex-basis: 200px;
+      -ms-flex-preferred-size: 200px;
+          flex-basis: 200px;
+}
+
+.u-mw--200px {
+  max-width: 200px;
+}

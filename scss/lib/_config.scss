@@ -1,0 +1,152 @@
+// *************************************
+//
+// # jigsass-objects-grid Config
+// -> Configuration variables
+//
+////
+/// @group Lists
+////
+//
+// *************************************
+
+@charset 'UTF-8';
+
+
+// -------------------------------------
+// Variables
+// -------------------------------------
+
+// stylelint-disable
+/* ---
+section: Lists
+title: Configuration
+order: -1
+---
+JigSass Lists allows for some modification through tweaking configuration variable.
+To override the default values, predefine them to your own needs _before_ importing JigSass Lists.
+
+
+#### Flexbox support
+```scss
+$jigsass-lists-flexbox
+```
+**Type:** `Boolean`
+
+Determines if flexbox should be enables, where relevant
+
+**Default:** `true`
+
+
+#### Flexbox Fallback
+```scss
+$jigsass-lists-flexbox-fallback
+```
+**Type:** `Boolean` or `String`
+
+Determines if flexbox fallback should be included and the qualifier class
+to use if so (e.g, `.no-flexbox` when using Modernizr defaults)
+
+Set to `false` to disable fallback altogether, and to a class-name
+(sans the leading `.`) used as the qualifier class if fallback is
+desirable.
+
+**Default:** `'no-flexbox'`
+
+
+#### Inline Delimiter
+```scss
+$jigsass-lists-inline-delimiter
+```
+**Type:** `String`
+
+The default delimiter to use with `.o-inline-list--delimited`.
+
+**Default:** `'\2002|\2002'`
+
+
+#### Divided lists border defaults
+```scss
+$jigsass-lists-divided-border
+```
+**Type:** `List`
+
+Sets the default border and padding above `devided-list`s' list items.
+
+A list of arguments for the `[jigsass-border-top](http://tinyurl.com/js-border-top)`
+mixin in the following order:
+
+  - A number in pixels. The border's width.
+  - A unitless number. The number of
+    [typographic lines](https://txhawks.github.io/jigsass-tools-typography/) occupied
+    by the border and padding added together.
+  - A string. The border's style (e.g., `solid`, `dotted`, etc.).
+
+**Default:** `1px 2 solid`
+
+
+#### Divided lists border modifiers
+```scss
+$jigsass-lists-divided-border-modifiers
+```
+**Type:** `Map`
+
+Border modifiers for divided lists.
+
+A map where each key is a modifier's name and its value is a
+list in the same format used in `[$jigsass-lists-divided-border](#jigsass-lists-divided-border)`.
+
+**Default:** `(tight: 1px 2 solid, loose: 1px 4 solid, x-loose: 1px 8 solid)`
+*/
+// stylelint-enable
+
+/// Determines if flexbox should be enables, where relevant
+/// ---
+/// @type Boolean
+/// ---
+$jigsass-lists-flexbox: true !default;
+
+/// Determines if flexbox fallback should be included and the qualifier class
+/// to use if so (e.g, `.no-flexbox` when using Modernizr defaults)
+///
+/// Set to `false` to disable fallback altogether, and to a class-name
+/// (sans the leading `.`) used as the qualifier class if fallback is
+/// desirable.
+/// ---
+/// @type String | Boolean
+/// ---
+$jigsass-lists-flexbox-fallback: 'no-flexbox' !default;
+
+/// The default delimiter to use with `.o-inline-list--delimited`.
+/// ---
+/// @type String
+/// ---
+$jigsass-lists-inline-delimiter: '\2002|\2002' !default;
+
+/// Sets the default border and padding above `devided-list`s' list items.
+///
+/// A list of arguments for the `[jigsass-border-top](http://tinyurl.com/js-border-top)`
+/// mixin in the following order:
+///
+///   - A number in pixels. The border's width.
+///   - A unitless number. The number of
+///     [typographic lines](https://txhawks.github.io/jigsass-tools-typography/) occupied
+///     by the border and padding added together.
+///   - A string. The border's style (e.g., `solid`, `dotted`, etc.).
+/// ---
+/// @type {List}
+/// ---
+$jigsass-lists-divided-border: 1px 2 solid !default;
+
+/// Border modifiers for divided lists.
+///
+/// A map where each key is a modifier's name and its value is a
+/// list in the same format used in `$jigsass-lists-divided-border`.
+/// ---
+/// @type Map
+/// ---
+$jigsass-lists-divided-border-modifiers: (
+  tight: 1px 1 solid,
+  loose: 1px 4 solid,
+  x-loose: 1px 8 solid
+) !default;
+

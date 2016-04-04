@@ -1,0 +1,114 @@
+<!doctype html>
+<title>jigsass-objects-lists</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="style.css?05" rel="stylesheet">
+<link href="jigsass-logo.png" rel="shortcut icon">
+<script type="text/javascript">WebFontConfig={google:{families:["Roboto:400,100,300,500:latin"]}},function(){var e=document.createElement("script");e.src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js",e.type="text/javascript",e.async="true";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}();</script>
+<script>examples={"base":"","target":"_self","css":["assets/sg.css"],"js":[],"bodyjs":[],"htmlcss":"background:none;border:0;clip:auto;display:block;height:auto;margin:0;padding:0;position:static;width:auto","bodycss":"background:none;border:0;clip:auto;display:block;height:auto;margin:0;padding:0;position:static;width:auto"};</script>
+
+<header>
+	<nav>
+		<img src="jigsass-logo.png" alt="jigsass-objects-lists">
+		
+	<ul>
+		
+				<li>
+					<a href="#list"><span>List</span></a>
+					
+	<ul>
+		
+				<li>
+					<a href="#list-mixin"><span>List mixin</span></a>
+					
+				</li>
+				
+	</ul>
+	
+				</li>
+				
+	</ul>
+	
+	</nav>
+</header>
+
+<main>
+	
+		<section id="list">
+			<h2>List</h2>
+			<div>
+				
+				
+		<section id="list-mixin">
+			<h3>List mixin</h3>
+			<div>
+				<pre><code class="lang-scss">@mixin jigsass-list($abstraction, $modifier: false, $from: false, $until: false, $misc: false) { ... }
+</code></pre>
+<h4 id="description">Description</h4>
+<p>Generate a list abstraction or an abstraction&#39;s modifier,
+optionally limited to a specific breakpoint defined in
+<a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
+<h4 id="parameters">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$abstraction</code></td>
+<td>A list abstraction (e.g., <code>bare</code>, <code>inline</code>, etc.)</td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>$modifier</code></td>
+<td>A list-abstraction&#39;s modifier, e.g., <code>bare</code>, <code>inline</code>, etc.</td>
+<td><code>String</code> or <code>Boolean</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>$from</code></td>
+<td>The name of breakpoint used as the min-width condition</td>
+<td><code>String</code> or <code>Boolean</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>$until</code></td>
+<td>The name of breakpoint used as the max-width condition</td>
+<td><code>String</code> or <code>Boolean</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>$misc</code></td>
+<td>The name of a miscellaneous media query condition</td>
+<td><code>String</code> or <code>Boolean</code></td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example">Example</h4>
+<pre><code class="lang-scss">@include jigsass-list(inline, $from: medium);
+</code></pre>
+<p>Will generate:</p>
+<pre><code class="lang-scss">@media (min-width: 37.5em) {
+  .o-inline-list--from-medium { ... }
+}
+</code></pre>
+
+				
+			</div>
+		</section>
+		
+			</div>
+		</section>
+		
+	<footer>Last modified Sunday, 3 April 2016 21:28</footer>
+</main>
+<script src="prism.js"></script>
+<script src="examples.js"></script>
+<script src="script.js"></script>
+

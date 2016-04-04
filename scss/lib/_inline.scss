@@ -1,0 +1,669 @@
+// *************************************
+//
+// # Inline List
+// -> Inline list items side by side.
+//
+////
+/// @group Lists
+////
+//
+// *************************************
+
+@charset 'UTF-8';
+
+
+// -------------------------------------
+// Dependencies
+// -------------------------------------
+
+// @if (check if dependency was imported) {
+//   @error '`jigsass-objects-lists` has a dependency on `****`. Please import it.'
+// }
+
+
+
+
+
+// -------------------------------------
+// Variables
+// -------------------------------------
+
+//
+
+
+
+
+
+// -------------------------------------
+// Functions
+// -------------------------------------
+
+//
+
+
+
+
+
+// -------------------------------------
+// Mixins
+// -------------------------------------
+
+//
+
+
+
+
+
+// -------------------------------------
+// Definitions
+// -------------------------------------
+
+@include jigsass-define-object(o-inline-list) {
+  // Inline list items side by side.
+  // ---
+  // 1. List element can only hold list items.
+  //    Use universal selector to keep specificity low.
+  // 2. Set list items side by side.
+  // ---
+  @include jigsass-classname() {
+    > * {                           // [1]
+      display: inline-block;        // [2]
+    }
+
+    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    @if (not index($_doclet-store, $_doclet)) {
+      // stylelint-disable
+  /* ---
+  section: Lists
+  title: Inline List
+  order: 2
+  ---
+  Place list (or fuax-list) elements side by side instead of stacked one on top of each other.
+
+
+  #### include with:
+  ```scss
+  @include jigsass-list(inline[$modifier, $from, $until, $misc]);
+  ```
+
+
+  #### Related Mixins:
+  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
+  optionally limited to a specific breakpoint defined in
+  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+
+
+  #### Usage example:
+  ```example:html
+  <ul class='inline-list'>
+    <li>item 1</li>
+    <li>item 2</li>
+    <li>item 3</li>
+    <li>item 4</li>
+    <li>item 5</li>
+  </ul>
+  ```
+
+  ```scss
+  // --- In Sass --- //
+  @include jigsass-list(inline);
+  ```
+
+  ** CSS output: **
+
+  ```scss
+  // --- CSS --- //
+  .o-inline-list > * {
+    display: inline-block;
+  }
+  ```
+  */
+    //stylelint-enable
+    }
+  }
+
+
+  // Delimit an inline-list by the string defined in `$jigsass-lists-inline-delimiter`
+  // 1. An attempt to remove whitespace between `display: inline-block`
+  //    list items.
+  //    Works with all non-monospaced fonts. When using a monospace font-face
+  //    as your base font, set the font-family on `.o-inline-list` to `sans-serif`
+  //    and re-apply your default font to its direct descendants.
+  //    alternatively, comment out whitespace between list items.
+  // 2. Fix webkit bug related to `[2]`.
+  // 3. Old Opera hack.
+  // 4. List element can only hold list items.
+  //    Use universal selector to keep specificity low.
+  // 5. Reset text defaults changed to eliminate whitespace.
+  // 6. Insert delimiter as a pseudo element of all list items except the last one.
+  // 7. Override delimiter with the one defined in `[data-jigsass-list-delimiter]`.
+  //    Bare in mind that characters should be escaped in the HTML when using this
+  //    method:
+  //    ```html
+  //    <ul class"[ o-inline-list o-inline-list--delimited ]">
+  //      <li data-jigsass-delimiter=",&nbsp;"> item 1</li>
+  //      <li data-jigsass-delimiter=",&nbsp;"> item 2</li>
+  //      <li data-jigsass-delimiter=",&nbsp;"> item 3</li>
+  //    </ul>
+  //    ```
+  @include jigsass-classname($modifier: delimited) {
+    letter-spacing: -0.31em;        // [1]
+    text-rendering: optimizespeed;  // [2]
+
+    opera:-o-prefocus &,
+    & {
+      word-spacing: -.043em;        // [3]
+    }
+
+    > * {                           // [4]
+      letter-spacing: normal;       // [5]
+      text-rendering: auto;         // [5]
+      word-spacing: normal;         // [5]
+
+      &:not(:last-child):after {   // [6]
+        content: $jigsass-lists-inline-delimiter;
+      }
+
+      &[data-jigsass-delimiter]:not(:last-child):after {   // [7]
+        content: attr(data-jigsass-delimiter);
+      }
+    }
+
+    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    @if (not index($_doclet-store, $_doclet)) {
+      // stylelint-disable
+  /* ---
+  section: Lists
+  title: Delimited Inline List
+  order: 3
+  ---
+  Delimit an inline-list by the string defined in `$jigsass-lists-inline-delimiter`
+
+  Override the delimiter of individual list items by setting the `data-jigsass-delimiter`
+  property in the HTML to the overriding delimitier:
+
+
+  #### include with:
+  ```scss
+  @include jigsass-list(inline, delimited[, $from, $until, $misc]);
+  ```
+
+
+  #### Related Mixins:
+  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
+  optionally limited to a specific breakpoint defined in
+  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+
+
+  #### Usage example:
+  ```example:html
+  <ul class='[ o-inline-list o-inline-list--delimited ]'>
+    <li data-jigsass-delimiter=':&nbsp;'><strong>Default delimiters</strong></li>
+    <li>item 2</li>
+    <li>item 3</li>
+    <li>item 4</li>
+    <li>item 5</li>
+  </ul>
+
+  <ul class='[ o-inline-list o-inline-list--delimited ]'>
+    <li data-jigsass-delimiter=':&nbsp;'><strong>Custom delimiters</strong></li>
+    <li data-jigsass-delimiter=',&nbsp'>item 2</li>
+    <li data-jigsass-delimiter=',&nbsp'>item 3</li>
+    <li data-jigsass-delimiter=',&nbsp'>item 4</li>
+    <li data-jigsass-delimiter=',&nbsp'>item 5</li>
+  </ul>
+  ```
+
+  ```scss
+  // --- In Sass --- //
+  @include jigsass-list(inline, $modifier: delimited);
+  ```
+
+  ** CSS output: **
+
+  ```scss
+  // --- CSS --- //
+  .o-inline-list--delimited {
+    letter-spacing: -0.31em;
+    text-rendering: optimizespeed;
+  }
+
+  opera:-o-prefocus .o-inline-list--delimited,
+  .o-inline-list--delimited {
+    word-spacing: -.043em;
+  }
+
+    .o-inline-list--delimited > * {
+      display: inline-block;
+      letter-spacing: normal;
+      text-rendering: auto;
+      word-spacing: normal;
+    }
+
+    .o-inline-list--delimited > *:not(:last-child):after {
+      content: $jigsass-lists-inline-delimiter;
+    }
+
+    .o-inline-list--delimited > *[data-jigsass-delimiter]:not(:last-child):after {
+      content: attr(data-jigsass-delimiter);
+    }
+  ```
+  */
+      // stylelint-enable
+    }
+  }
+
+
+  // Push all items in an inline list past the
+  // first one to the horizontal end of the container.
+  @include jigsass-classname($modifier: split-first) {
+    // When flexbox is enabled
+    @if ($jigsass-lists-flexbox) {
+      display: flex;
+
+      > * {
+        flex-grow: 0;
+
+        &:first-child {
+          @include jigsass-bidi(margin-end, auto);
+        }
+      }
+
+      // When support for flexbox fallback is needed
+      @if ($jigsass-lists-flexbox-fallback) {
+        .#{$jigsass-lists-flexbox-fallback} & {
+          display: table;
+
+          > * {
+            display: table-cell;
+            white-space: nowrap;
+
+            &:first-child {
+              max-width: 100%;
+              width: 10000px;
+            }
+          }
+        }
+      }
+    }
+
+    // When flexbox is disabled
+    @else {
+      display: table;
+
+      > * {
+        display: table-cell;
+        white-space: nowrap;
+
+        &:first-child {
+          max-width: 100%;
+          width: 10000px;
+        }
+      }
+    }
+
+    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    @if (not index($_doclet-store, $_doclet)) {
+      // stylelint-disable
+  /* ---
+  section: Lists
+  title: Split Inline List (first)
+  order: 4
+  ---
+  Push all items in an inline list past the first one to the horizontal end of the container.
+
+
+  #### include with:
+  ```scss
+  @include jigsass-list(inline, split-first[, $from, $until, $misc]);
+  ```
+
+
+  #### Related Mixins:
+  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
+  optionally limited to a specific breakpoint defined in
+  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+
+
+  #### Usage example:
+  ```example:html
+  <ul class='u-maw--600px [ fpo fpo--b ]  [ o-inline-list o-inline-list--split-first ]'>
+  <li><strong>Pushed to the edge</strong></li>
+    <li>item 2</li>
+    <li>item 3</li>
+    <li>item 4</li>
+    <li>item 5</li>
+  </ul>
+  ```
+
+  ```scss
+  // --- In Sass --- //
+  @include jigsass-list(inline, $modifier: split-first);
+  ```
+
+  ** CSS output: **
+
+  ```scss
+  // --- CSS --- //
+
+  // When flexbox is enabled
+  .o-inline-list--split-first {
+    display: flex;
+  }
+
+    .o-inline-list--split-first > * {
+      flex-grow: 0;
+    }
+
+    .o-inline-list--split-first > *:first-child {
+      margin-(left|right): auto;
+    }
+
+  // When support for flexbox fallback is needed
+  .#{$jigsass-lists-flexbox-fallback} .o-inline-list--split-first {
+    display: table;
+  }
+
+    .#{$jigsass-lists-flexbox-fallback} .o-inline-list--split-first > * {
+      display: table-cell;
+      white-space: nowrap;
+    }
+
+    .#{$jigsass-lists-flexbox-fallback} .o-inline-list--split-first > *:first-child {
+      max-width: 100%;
+      width: 10000px;
+    }
+
+  // When flexbox is disabled
+  .o-inline-list--split-first {
+    display: table;
+  }
+
+    .o-inline-list--split-first > * {
+      display: table-cell;
+      white-space: nowrap;
+    }
+
+    .o-inline-list--split-first > *:first-child {
+      max-width: 100%;
+      width: 10000px;
+    }
+  ```
+  */
+      // stylelint-enable
+    }
+  }
+
+
+  // Push the last item in an inline list
+  // to the horizontal end of the container.
+  @include jigsass-classname($modifier: split-last) {
+    // When flexbox is enabled
+    @if ($jigsass-lists-flexbox) {
+      display: flex;
+
+      > * {
+        flex-grow: 0;
+
+        &:last-child {
+          @include jigsass-bidi(margin-start, auto);
+        }
+      }
+
+      // When support for flexbox fallback is needed
+      @if ($jigsass-lists-flexbox-fallback) {
+        .#{$jigsass-lists-flexbox-fallback} & {
+          display: table;
+
+          > * {
+            display: table-cell;
+            white-space: nowrap;
+
+            &:last-child {
+              @include jigsass-bidi(text-align, end);
+              max-width: 100%;
+              width: 10000px;
+            }
+          }
+        }
+      }
+    }
+
+    // When flexbox is disabled
+    @else {
+      display: table;
+
+      > * {
+        display: table-cell;
+        white-space: nowrap;
+
+        &:last-child {
+          @include jigsass-bidi(text-align, end);
+          max-width: 100%;
+          width: 10000px;
+        }
+      }
+    }
+
+    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    @if (not index($_doclet-store, $_doclet)) {
+      // stylelint-disable
+  /* ---
+  section: Lists
+  title: Split Inline List (last)
+  order: 5
+  ---
+  Push the last item in an inline list to the horizontal end of the container.
+
+
+  #### include with:
+  ```scss
+  @include jigsass-list(inline, split-last[, $from, $until, $misc]);
+  ```
+
+
+  #### Related Mixins:
+  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
+  optionally limited to a specific breakpoint defined in
+  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+
+
+  #### Usage example:
+  ```example:html
+  <ul class='u-maw--600px [ fpo fpo--b ]  [ o-inline-list o-inline-list--split-last ]'>
+    <li>item 1</li>
+    <li>item 2</li>
+    <li>item 3</li>
+    <li>item 4</li>
+    <li><strong>Pushed to the edge</strong></li>
+  </ul>
+  ```
+
+  ```scss
+  // --- In Sass --- //
+  @include jigsass-list(inline, $modifier: split-last);
+  ```
+
+  ** CSS output: **
+
+  ```scss
+  // --- CSS --- //
+
+  // When flexbox is enabled
+  .o-inline-list--split-last {
+    display: flex;
+  }
+
+    .o-inline-list--split-last > * {
+      flex-grow: 0;
+    }
+
+    .o-inline-list--split-last > *:last-child {
+      margin-(left|right): auto;
+    }
+
+  // When support for flexbox fallback is needed
+  .#{$jigsass-lists-flexbox-fallback} .o-inline-list--split-last {
+    display: table;
+  }
+
+    .#{$jigsass-lists-flexbox-fallback} .o-inline-list--split-last > * {
+      display: table-cell;
+      white-space: nowrap;
+    }
+
+    .#{$jigsass-lists-flexbox-fallback} .o-inline-list--split-last > *:last-child {
+      max-width: 100%;
+      text-align: (left|right);
+      width: 10000px;
+    }
+
+  // When flexbox is disabled
+  .o-inline-list--split-last {
+    display: table;
+  }
+
+    .o-inline-list--split-last > * {
+      display: table-cell;
+      white-space: nowrap;
+    }
+
+    .o-inline-list--split-last > *:last-child {
+      max-width: 100%;
+      text-align: (left|right);
+      width: 10000px;
+    }
+  ```
+  */
+      // stylelint-enable
+    }
+  }
+
+
+  // Equally spread list items to fill the full (fluid)
+  // width of their container
+  // ---
+  // 1. Equally size children.
+  // ---
+  @include jigsass-classname($modifier: spread) {
+    width: 100%;
+
+    // When flexbox is enabled
+    @if ($jigsass-lists-flexbox) {
+      display: flex;
+      flex-basis: 100%;
+      flex-wrap: nowrap;
+
+      > * {
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
+
+      // When support for flexbox fallback is needed
+      @if ($jigsass-lists-flexbox-fallback) {
+        .#{$jigsass-lists-flexbox-fallback} & {
+          display: table;
+          table-layout: fixed; // [1]
+
+          > * {
+            display: table-cell;
+          }
+        }
+      }
+    }
+
+    // When flexbox is disabled
+    @else {
+      display: table;
+      table-layout: fixed; // [1]
+
+      > * {
+        display: table-cell;
+      }
+    }
+
+    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    @if (not index($_doclet-store, $_doclet)) {
+      // stylelint-disable
+  /* ---
+  section: Lists
+  title: Spread out Inline List
+  order: 6
+  ---
+  // Equally spread list items to fill the full (fluid)
+  // width of their container
+  Push all items in an inline list past the first one to the horizontal end of the container.
+
+
+  #### include with:
+  ```scss
+  @include jigsass-list(inline, spread[, $from, $until, $misc]);
+  ```
+
+
+  #### Related Mixins:
+  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
+  optionally limited to a specific breakpoint defined in
+  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+
+
+  #### Usage example:
+  ```example:html
+  <ul class='[ o-inline-list o-inline-list--spread ]'>
+    <li class='fpo'>item 1</li>
+    <li class='fpo'>item 2</li>
+    <li class='fpo'>
+      <strong>I'm much longer than the others, two lines I will take</strong>
+    </li>
+    <li class='fpo'>item 3</li>
+    <li class='fpo'>item 4</li>
+  </ul>
+  ```
+
+  ```scss
+  // --- In Sass --- //
+  @include jigsass-list(inline, $modifier: spread);
+  ```
+
+  ** CSS output: **
+
+  ```scss
+  // --- CSS --- //
+
+  // When flexbox is enabled
+  .o-inline-list--spread {
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: nowrap;
+  }
+
+    .o-inline-list--spread > * {
+      flex-grow: 1;
+      flex-shrink: 1;
+    }
+
+  // When support for flexbox fallback is needed
+  .#{$jigsass-lists-flexbox-fallback} .o-inline-list--spread {
+    display: table;
+    table-layout: fixed;
+  }
+
+    .#{$jigsass-lists-flexbox-fallback} .o-inline-list--spread > * {
+      display: table-cell;
+    }
+
+  // When flexbox is disabled
+  .o-inline-list--spread {
+    display: table;
+    table-layout: fixed;
+  }
+
+    .o-inline-list--spread > * {
+      display: table-cell;
+    }
+  ```
+  */
+      // stylelint-enable
+    }
+  }
+}
