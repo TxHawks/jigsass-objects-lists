@@ -135,21 +135,22 @@ This way our css remains small and maintainable:</p>
 <p>All JigSass List classes are responsive using <a href="https://txhawks.github.io/jigsass-tools-mq/">JigSass MQ</a>
 and the breakpoints defined in
 <code>[$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)</code>.</p>
-<p>Based on the arguments passed to the jigsass-list, responsive modifiers are generated according
+<p>Based on the arguments passed to the jigsass-list mixin, responsive modifiers are generated according
 to the following logic:</p>
-<p>.o-<list-abstraction>--modifier[-[-from-{breakpoint-name}][-until-{breakpoint-name}][-misc-{breakpoint-name}]]
-So, assuming the <code>medium</code>, <code>large</code> and <code>landscape</code> breakpoints are defined in <code>$jigsass-breakpoints</code>
+<pre><code class="lang-scss">.o-&lt;list-abstraction&gt;--modifier[-[-from-{breakpoint-name}][-until-{breakpoint-name}][-misc-{breakpoint-name}]]
+</code></pre>
+<p>So, assuming the <code>medium</code>, <code>large</code> and <code>landscape</code> breakpoints are defined in <code>$jigsass-breakpoints</code>
 as <code>600px</code>, <code>1024px</code> and <code>(orientation: landscape)</code> respectively,</p>
 <pre><code class="lang-scss">@include jigsass-list(inline, $modifier: split-first);
 </code></pre>
-<p>will generate the <code>.inline-list--split-first</code> class, which is the default, and is not limited to any media-query.</p>
+<p>will generate the <code>.o-inline-list--split-first</code> class, which is the default, and is not limited to any media-query.</p>
 <pre><code class="lang-scss">@include jigsass-list(inline, $modifier: split-first, $until: medium);
 </code></pre>
-<p>will generate the <code>.o-inline-list--split-first--until-medium</code> class, which will go into effect at
+<p>will generate the <code>.o-inline-list--split-first--until-medium</code> class, which will be in effect at
 <code>(max-width: 37.49em)</code> and will override styles in the default class until that point.</p>
 <pre><code class="lang-scss">@include jigsass-list(inline, $modifier: split-first, $from: large, $misc: landscape);
 </code></pre>
-<p>will generate the <code>.inline-list--split-first--from-large-when-landscape</code> class, which will go into
+<p>will generate the <code>.o-inline-list--split-first--from-large-when-landscape</code> class, which will go into
 effect at <code>(min-width: 64em) and (orientation: landscape)</code> and will override styles in the default
 class under these  conditions.</p>
 <p>Regardless of how many times a class is included, or where, it will only be generated once,
@@ -758,7 +759,7 @@ optionally limited to a specific breakpoint defined in
 			</div>
 		</section>
 		
-	<footer>Last modified Tuesday, 5 April 2016 14:34</footer>
+	<footer>Last modified Tuesday, 5 April 2016 20:24</footer>
 </main>
 <script src="prism.js"></script>
 <script src="examples.js"></script>
