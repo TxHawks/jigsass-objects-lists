@@ -75,30 +75,33 @@ All JigSass List classes are responsive using [JigSass MQ](https://txhawks.githu
 and the breakpoints defined in
 `[$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)`.
 
-Based on the arguments passed to the jigsass-list, responsive modifiers are generated according
+Based on the arguments passed to the jigsass-list mixin, responsive modifiers are generated according
 to the following logic:
 
+```scss
 .o-<list-abstraction>--modifier[-[-from-{breakpoint-name}][-until-{breakpoint-name}][-misc-{breakpoint-name}]]
+```
+
 So, assuming the `medium`, `large` and `landscape` breakpoints are defined in `$jigsass-breakpoints`
 as `600px`, `1024px` and `(orientation: landscape)` respectively,
 
 ```scss
 @include jigsass-list(inline, $modifier: split-first);
 ```
-will generate the `.inline-list--split-first` class, which is the default, and is not limited to any media-query.
+will generate the `.o-inline-list--split-first` class, which is the default, and is not limited to any media-query.
 
 ```scss
 @include jigsass-list(inline, $modifier: split-first, $until: medium);
 ```
 
-will generate the `.o-inline-list--split-first--until-medium` class, which will go into effect at
+will generate the `.o-inline-list--split-first--until-medium` class, which will be in effect at
 `(max-width: 37.49em)` and will override styles in the default class until that point.
 
 ```scss
 @include jigsass-list(inline, $modifier: split-first, $from: large, $misc: landscape);
 ```
 
-will generate the `.inline-list--split-first--from-large-when-landscape` class, which will go into
+will generate the `.o-inline-list--split-first--from-large-when-landscape` class, which will go into
 effect at `(min-width: 64em) and (orientation: landscape)` and will override styles in the default
 class under these  conditions.
 
