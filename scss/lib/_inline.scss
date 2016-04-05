@@ -70,7 +70,7 @@
       display: inline-block;        // [2]
     }
 
-    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -170,7 +170,7 @@
       }
     }
 
-    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -304,7 +304,7 @@
       }
     }
 
-    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -448,7 +448,7 @@
       }
     }
 
-    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -586,7 +586,7 @@
       }
     }
 
-    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---

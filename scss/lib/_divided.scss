@@ -80,7 +80,7 @@
       @include jigsass-border-top($_br-width, $_br-lines, $_br-style);
     }
 
-    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -154,7 +154,7 @@
         @include jigsass-border-top($_br-width, $_br-lines, $_br-style);
       }
 
-      $_doclet: $_jigsass-obj-current-name + ($modifier or '');
+      $_doclet: $jigsass-obj-current-name + ($modifier or '');
 
       @if (not index($_doclet-store, $_doclet)) {
         // stylelint-disable

@@ -39,7 +39,7 @@
     "jigsass-tools-bidi": "^1.1.1",
     "jigsass-tools-maps": "^1.0.6",
     "jigsass-tools-mq": "^1.4.3",
-    "jigsass-tools-selectors": "^0.3.0",
+    "jigsass-tools-selectors": "^0.4.0",
     "jigsass-tools-strings": "^1.1.1",
     "jigsass-tools-typography": "^1.1.3"
   },

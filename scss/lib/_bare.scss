@@ -61,7 +61,7 @@
 @include jigsass-define-object(o-bare-list) {
   @include jigsass-classname() {
     list-style: none;
-    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
