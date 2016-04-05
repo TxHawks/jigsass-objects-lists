@@ -136,7 +136,8 @@
     }
   ```
   */
-    //stylelint-enable
+      //stylelint-enable
+      $_doclet-store: append($_doclet-store, $_doclet) !global;
     }
   }
 
@@ -154,6 +155,7 @@
       }
 
       $_doclet: $_jigsass-obj-current-name + ($modifier or '');
+
       @if (not index($_doclet-store, $_doclet)) {
         // stylelint-disable
   /* ---
@@ -191,7 +193,8 @@
   @include jigsass-list(divided, $modifier: #{$modifier});
   ```
   */
-      //stylelint-enable
+        //stylelint-enable
+        $_doclet-store: append($_doclet-store, $_doclet) !global;
       }
     }
   }

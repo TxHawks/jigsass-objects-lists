@@ -61,7 +61,9 @@
 @include jigsass-define-object(o-bare-list) {
   @include jigsass-classname() {
     list-style: none;
-    // stylelint-disable
+    $_doclet: $_jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    @if (not index($_doclet-store, $_doclet)) {
+      // stylelint-disable
   /* ---
   section: Lists
   title: Bare List
@@ -107,6 +109,8 @@
   }
   ```
   */
-  //stylelint-enable
+      //stylelint-enable
+      $_doclet-store: append($_doclet-store, $_doclet) !global;
+    }
   }
 }

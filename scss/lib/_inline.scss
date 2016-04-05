@@ -118,7 +118,8 @@
   }
   ```
   */
-    //stylelint-enable
+      //stylelint-enable
+      $_doclet-store: append($_doclet-store, $_doclet) !global;
     }
   }
 
@@ -250,6 +251,7 @@
   ```
   */
       // stylelint-enable
+      $_doclet-store: append($_doclet-store, $_doclet) !global;
     }
   }
 
@@ -391,6 +393,7 @@
   ```
   */
       // stylelint-enable
+      $_doclet-store: append($_doclet-store, $_doclet) !global;
     }
   }
 
@@ -536,6 +539,7 @@
   ```
   */
       // stylelint-enable
+      $_doclet-store: append($_doclet-store, $_doclet) !global;
     }
   }
 
@@ -664,6 +668,7 @@
   ```
   */
       // stylelint-enable
+      $_doclet-store: append($_doclet-store, $_doclet) !global;
     }
   }
 }
