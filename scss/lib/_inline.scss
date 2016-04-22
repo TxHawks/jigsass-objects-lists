@@ -13,18 +13,6 @@
 
 
 // -------------------------------------
-// Dependencies
-// -------------------------------------
-
-// @if (check if dependency was imported) {
-//   @error '`jigsass-objects-lists` has a dependency on `****`. Please import it.'
-// }
-
-
-
-
-
-// -------------------------------------
 // Variables
 // -------------------------------------
 
@@ -58,7 +46,7 @@
 // Definitions
 // -------------------------------------
 
-@include jigsass-define-object(o-inline-list) {
+@include jigsass-object(o-inline-list, $jigsass-list-inline-conf) {
   // Inline list items side by side.
   // ---
   // 1. List element can only hold list items.
@@ -70,7 +58,7 @@
       display: inline-block;        // [2]
     }
 
-    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-name + ($jigsass-obj-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -79,18 +67,6 @@
   order: 2
   ---
   Place list (or fuax-list) elements side by side instead of stacked one on top of each other.
-
-
-  #### include with:
-  ```scss
-  @include jigsass-list(inline[$modifier, $from, $until, $misc]);
-  ```
-
-
-  #### Related Mixins:
-  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
-  optionally limited to a specific breakpoint defined in
-  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
 
 
   #### Usage example:
@@ -104,10 +80,6 @@
   </ul>
   ```
 
-  ```scss
-  // --- In Sass --- //
-  @include jigsass-list(inline);
-  ```
 
   ** CSS output: **
 
@@ -170,7 +142,7 @@
       }
     }
 
-    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-name + ($jigsass-obj-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -184,19 +156,11 @@
   property in the HTML to the overriding delimitier:
 
 
-  #### include with:
-  ```scss
-  @include jigsass-list(inline, delimited[, $from, $until, $misc]);
-  ```
+  #### Related Variables
+    - `$jigsass-lists-inline-delimiter` (default: `'\2002|\2002'`):
+      The default delimiter to use with `.o-inline-list--delimited`.
 
-
-  #### Related Mixins:
-  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
-  optionally limited to a specific breakpoint defined in
-  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
-
-
-  #### Usage example:
+  #### Usage example
   ```example:html
   <ul class='[ o-inline-list o-inline-list--delimited ]'>
     <li data-jigsass-delimiter=':&nbsp;'><strong>Default delimiters</strong></li>
@@ -215,10 +179,6 @@
   </ul>
   ```
 
-  ```scss
-  // --- In Sass --- //
-  @include jigsass-list(inline, $modifier: delimited);
-  ```
 
   ** CSS output: **
 
@@ -304,7 +264,7 @@
       }
     }
 
-    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-name + ($jigsass-obj-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -315,16 +275,15 @@
   Push all items in an inline list past the first one to the horizontal end of the container.
 
 
-  #### include with:
-  ```scss
-  @include jigsass-list(inline, split-first[, $from, $until, $misc]);
-  ```
-
-
-  #### Related Mixins:
-  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
-  optionally limited to a specific breakpoint defined in
-  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+  #### Related Variables
+    - '$jigsass-lists-flexbox' (default: true):
+      Determines if flexbox should be enables, where relevant
+    - '$jigsass-lists-flexbox-fallback' (default: 'no-flexbox'):
+      Determines if flexbox fallback should be included and the qualifier class
+      to use if so (e.g, `.no-flexbox` when using Modernizr defaults)
+      Set to `false` to disable fallback altogether, and to a class-name
+      (sans the leading `.`) used as the qualifier class if fallback is
+      desirable.
 
 
   #### Usage example:
@@ -338,10 +297,6 @@
   </ul>
   ```
 
-  ```scss
-  // --- In Sass --- //
-  @include jigsass-list(inline, $modifier: split-first);
-  ```
 
   ** CSS output: **
 
@@ -448,7 +403,7 @@
       }
     }
 
-    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-name + ($jigsass-obj-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -459,16 +414,15 @@
   Push the last item in an inline list to the horizontal end of the container.
 
 
-  #### include with:
-  ```scss
-  @include jigsass-list(inline, split-last[, $from, $until, $misc]);
-  ```
-
-
-  #### Related Mixins:
-  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
-  optionally limited to a specific breakpoint defined in
-  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+  #### Related Variables
+    - '$jigsass-lists-flexbox' (default: true):
+      Determines if flexbox should be enables, where relevant
+    - '$jigsass-lists-flexbox-fallback' (default: 'no-flexbox'):
+      Determines if flexbox fallback should be included and the qualifier class
+      to use if so (e.g, `.no-flexbox` when using Modernizr defaults)
+      Set to `false` to disable fallback altogether, and to a class-name
+      (sans the leading `.`) used as the qualifier class if fallback is
+      desirable.
 
 
   #### Usage example:
@@ -482,10 +436,6 @@
   </ul>
   ```
 
-  ```scss
-  // --- In Sass --- //
-  @include jigsass-list(inline, $modifier: split-last);
-  ```
 
   ** CSS output: **
 
@@ -586,7 +536,7 @@
       }
     }
 
-    $_doclet: $jigsass-obj-current-name + ($jigsass-obj-current-modifier or '');
+    $_doclet: $jigsass-obj-name + ($jigsass-obj-modifier or '');
     @if (not index($_doclet-store, $_doclet)) {
       // stylelint-disable
   /* ---
@@ -599,16 +549,15 @@
   Push all items in an inline list past the first one to the horizontal end of the container.
 
 
-  #### include with:
-  ```scss
-  @include jigsass-list(inline, spread[, $from, $until, $misc]);
-  ```
-
-
-  #### Related Mixins:
-  [jigsass-list](#list-mixin): Generates a list abstraction or an abstraction's modifier,
-  optionally limited to a specific breakpoint defined in
-  [$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)).
+  #### Related Variables
+    - '$jigsass-lists-flexbox' (default: true):
+      Determines if flexbox should be enables, where relevant
+    - '$jigsass-lists-flexbox-fallback' (default: 'no-flexbox'):
+      Determines if flexbox fallback should be included and the qualifier class
+      to use if so (e.g, `.no-flexbox` when using Modernizr defaults)
+      Set to `false` to disable fallback altogether, and to a class-name
+      (sans the leading `.`) used as the qualifier class if fallback is
+      desirable.
 
 
   #### Usage example:
@@ -624,10 +573,6 @@
   </ul>
   ```
 
-  ```scss
-  // --- In Sass --- //
-  @include jigsass-list(inline, $modifier: spread);
-  ```
 
   ** CSS output: **
 

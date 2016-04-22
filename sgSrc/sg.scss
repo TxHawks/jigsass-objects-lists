@@ -28,6 +28,37 @@
 
 
 // --------------------
+// Settings
+// --------------------
+
+$jigsass-list-bare-conf: (
+  no-breakpoint: (
+    no-modifier: true,
+  ),
+);
+$jigsass-list-inline-conf: (
+  no-breakpoint: (
+    no-modifier: true,
+    delimited: true,
+    split-last: true,
+    split-first: true,
+    spread: true,
+  ),
+);
+$jigsass-list-divided-conf: (
+  no-breakpoint: (
+    no-modifier: true,
+    tight: true,
+    loose: true,
+    x-loose: true,
+  ),
+);
+
+
+
+
+
+// --------------------
 // Imports
 // --------------------
 
@@ -35,26 +66,6 @@
 
 
 
-
-
-// --------------------
-// Styles
-// --------------------
-
-// --- list-bare Container --- //
-@include jigsass-list(bare);
-
-@include jigsass-list(inline);
-@include jigsass-list(inline, $modifier: delimited);
-@include jigsass-list(inline, $modifier: split-last);
-@include jigsass-list(inline, $modifier: split-first);
-@include jigsass-list(inline, $modifier: spread);
-
-@include jigsass-list(divided);
-
-@each $modifier-name in map-keys($jigsass-lists-divided-border-modifiers) {
-  @include jigsass-list(divided, $modifier: $modifier-name);
-}
 
 
 

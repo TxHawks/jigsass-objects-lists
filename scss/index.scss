@@ -15,19 +15,20 @@
 // -------------------------------------
 
 @if (not function-exists(jigsass-get)) {
-  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-maps. Please import it.'
+  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-maps. Please import it.';
 }
 @if (not mixin-exists(jigsass-mq)) {
-  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-mq. Please import it.'
+  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-mq. Please import it.';
 }
 @if (not function-exists(jigsass-rhythm)) {
-  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-typography`. Please import it.'
+  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-typography`. ' +
+    'Please import it.';
 }
 @if (not mixin-exists(jigsass-bidi)) {
-  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-bidi`. Please import it.'
+  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-bidi`. Please import it.';
 }
-@if (not mixin-exists(jigsass-define-object)) {
-  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-selectors. Please import it.'
+@if (not mixin-exists(jigsass-object)) {
+  @error '`jigsass-objects-lists` has a dependency on `jigsass-tools-selectors. Please import it.';
 }
 
 
@@ -50,7 +51,6 @@ $_doclet-store: () !default;
 
 @import 'lib/intro';
 @import 'lib/config';
-@import 'lib/list';
 
 @import 'lib/bare';
 @import 'lib/inline';

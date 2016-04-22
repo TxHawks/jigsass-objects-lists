@@ -15,13 +15,14 @@ npm i -S jigsass-objects-lists
 
 ## Usage
 
-First, you would need to import JigSass Lists:
+First, you need to import JigSass Lists into your stylesheet:
 ```scss
 @import 'path/to/jigsass-objects-lists/scss/index';
 ```
+
 And optionally [reconfigure](https://tinyurl.com/lists-config) the defaults to your liking.
 
-Provides the following list abstractions:
+JigSass Lists provides the following list abstractions:
 
   - [Bare list](https://txhawks.github.io/jigsass-objects-lists/#bare-lists): Unstyled lists.
   - [Inline list](https://txhawks.github.io/jigsass-objects-lists/#inline-lists): Inlined list items,
@@ -36,53 +37,48 @@ Provides the following list abstractions:
 See [here](https://txhawks.github.io/jigsass-objects-lists/) for the full documentation and 
 configuration options.
 
-
-Like all other JigSass modules, JigSass Lists does not automatically generate any CSS when imported.
+Like all other JigSass modules, JigSass List does not automatically generate any CSS when imported.
 In order to use its classes, you would have to first explicitly indicate your intention to use
-them, using the [jigsass-list](https://txhawks.github.io/jigsass-objects-lists/#list-mixin) mixin.
-This way our css remains small and maintainable:
+them by enabling their generation in the associated 
+[configurations map](https://txhawks.github.io/jigsass-objects-lists/#css-output), 
+Leaving us only with CSS we need.
 
-```scss
-@include jigsass-list($list-abstraction[, $modifier, $from-brekpoint, $until-breakpoint, $misc-breakpoint]);
-```
-
-All JigSass List classes are responsive using [JigSass MQ](https://txhawks.github.io/jigsass-tools-mq/) 
-and the breakpoints defined in 
+All JigSass List classes are responsive using [JigSass MQ](https://txhawks.github.io/jigsass-tools-mq/)
+and the breakpoints defined in
 `[$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)`.
 
-Based on the arguments passed to the jigsass-list mixin, responsive modifiers are generated 
-according to the following logic:
+Based enabled selectors in the [configuration map](https://txhawks.github.io/jigsass-objects-lists/#css-output), responsive modifiers are
+generated according to the following logic:
 
-```scss 
+```scss
 .o-<list-abstraction>--modifier[-[-from-{breakpoint-name}][-until-{breakpoint-name}][-misc-{breakpoint-name}]]
 ```
 
-So, assuming the `medium`, `large` and `landscape` breakpoints are defined in `$jigsass-breakpoints` 
+So, assuming the `medium`, `large` and `landscape` breakpoints are defined in `$jigsass-breakpoints`
 as `600px`, `1024px` and `(orientation: landscape)` respectively,
 
 ```scss
-@include jigsass-list(inline, $modifier: split-first);
-```
-will generate the `.o-inline-list--split-first` class, which is the default, and is not limited to any media-query.
-
-```scss
-@include jigsass-list(inline, $modifier: split-first, $until: medium);
-```
-
-will generate the `.o-inline-list--split-first--until-medium` class, which will go into effect at 
-`(max-width: 37.49em)` and will override styles in the default class until that point.
-
-```scss
-@include jigsass-list(inline, $modifier: split-first, $from: large, $misc: landscape);
+$jigsass-list-inline-conf: (
+  no-breakpoint: (
+    split-first: true,
+  ),
+  until-medium: (
+    split-first: true,
+  ),
+  from-large-when-landscape: (
+    split-first: true,
+  ),
+)
 ```
 
-will generate the `.o-inline-list--split-first--from-large-when-landscape` class, which will go into 
-effect at `(min-width: 64em) and (orientation: landscape)` and will override styles in the default 
-class under these  conditions.
-
-Regardless of how many times a class is included, or where, it will only be generated once, 
-where the `jigsass-objects-items` partial was imported, leaving us with a css file as small 
-as possible, and a predictable cascade.
+will generate the following classes:
+  - `.o-inline-list--split-first`, which is not limited to any media-query.
+  - `.o-inline-list--split-first--until-medium`, which will be in effect at
+    `(max-width: 37.49em)` and will override styles in the default class
+    until that point.
+  - `.o-inline-list--split-first--from-large-when-landscape`, which will go
+    into effect at `(min-width: 64em) and (orientation: landscape)` and
+    will override styles in the default class under these  conditions.
 
 
 ## Contributing

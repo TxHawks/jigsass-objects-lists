@@ -1,6 +1,6 @@
 // *************************************
 //
-// # jigsass-objects-grid Config
+// # JigSass Lists Config
 // -> Configuration variables
 //
 ////
@@ -15,6 +15,383 @@
 // -------------------------------------
 // Variables
 // -------------------------------------
+
+// stylelint-disable
+/* ---
+section: Lists
+title: CSS Outpout
+order: -2
+---
+By default, JigSass Lists does not generate any CSS output when imported into
+a stylesheet. CSS output must be enabled on a per-selector basis, inside the
+dedicated configuration maps:
+
+#### Bare list and modifier classes
+```scss
+$jigsass-list-bare-conf
+```
+
+
+**Type:** `Map`
+
+Configuration map for enabling generation of
+bare-list and bare-list modifier classes.
+
+
+**Default:**
+```scss
+$jigsass-list-bare-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+  ),
+);
+```
+
+
+**Example:**
+```scss
+$jigsass-list-bare-conf: (
+  no-breakpoint: (
+    no-modifier: true,  // Enables generation of the `.o-bare-list`
+                        // class outside of any media query.
+  ),
+  from-<bp-name>: (
+    no-modifier: true,  // Enables generation of the `.o-bare-list--from-<bp-name>`
+                        // class inside a min-width media query
+                        // defined ins `$jigsass-breakpoints.length`.
+  ),
+  until-<bp-name>: (
+    no-modifier: true,  // Enables generation of the `.o-bare-list--until-<bp-name>`
+                        // class inside a max-width media query
+                        // defined ins `$jigsass-breakpoints.length`.
+  ),
+  when-<bp-name>: (
+    no-modifier: true,  // Enables generation of the `.o-bare-list--when-<bp-name>`
+                        // class inside a misc media query
+                        // defined ins `$jigsass-breakpoints.features`.
+  ),
+  from-<bp-name>-until-<bp-name>: (...);
+  from-<bp-name>-when-<bp-name>: (...);
+  until-<bp-name>-when-<bp-name>: (...);
+  from-<bp-name>-until-<bp-name>-when-<bp-name>: (...);
+);
+```
+
+
+#### Inline list and modifier classes
+```scss
+$jigsass-list-inline-conf
+```
+
+
+**Type:** `Map`
+
+Configuration map for enabling generation of
+inline-list and inline-list modifier classes.
+
+
+**Default:**
+```scss
+$jigsass-list-inline-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+    delimited: false,
+    split-first: false,
+    split-last: false,
+    spread: false,
+  ),
+);
+```
+
+
+**Example:**
+```scss
+$jigsass-list-inline-conf: (
+  no-breakpoint: (
+    // Enables generation of the `.o-inline-list`
+    // class outside of any media query.
+    no-modifier: true,
+    // Enables generation of the `.o-inline-list--spread`
+    // modifier class outside of any media query.
+    spread: true,
+  ),
+  from-<bp-name>: (
+    // Enables generation of the `.o-inline-list--from-<bp-name>`
+    // class inside a min-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    no-modifier: true,
+    // Enables generation of the `.o-inline-list--spread--from-<bp-name>`
+    // class inside a min-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    spread: true,
+  ),
+  until-<bp-name>: (
+    // Enables generation of the `.o-inline-list--until-<bp-name>`
+    // class inside a max-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    no-modifier: true,
+    // Enables generation of the `.o-inline-list--spread--until-<bp-name>`
+    // class inside a max-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    spread: true,
+  ),
+  when-<bp-name>: (
+    // Enables generation of the `.o-inline-list--when-<bp-name>`
+    // class inside a misc media query
+    // defined ins `$jigsass-breakpoints.features`.
+    no-modifier: true,
+    // Enables generation of the `.o-inline-list--spread--when-<bp-name>`
+    // class inside a misc media query
+    // defined ins `$jigsass-breakpoints.features`.
+    spread: true,
+  ),
+  from-<bp-name>-until-<bp-name>: (...);
+  from-<bp-name>-when-<bp-name>: (...);
+  until-<bp-name>-when-<bp-name>: (...);
+  from-<bp-name>-until-<bp-name>-when-<bp-name>: (...);
+);
+```
+
+
+#### Divided list and modifier classes
+```scss
+$jigsass-list-divided-conf
+```
+
+
+**Type:** `Map`
+
+Configuration map for enabling generation of
+divided-list and divided-list modifier classes.
+
+
+**Default:**
+```scss
+$jigsass-list-divided-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+
+    // Enable border modifiers here,
+    // based on the ones defined in
+    // `$jigsass-lists-divided-border-modifiers`
+  ),
+);
+```
+
+
+**Example:**
+```scss
+$jigsass-list-divided-conf: (
+  no-breakpoint: (
+    // Enables generation of the `.o-divided-list`
+    // class outside of any media query.
+    no-modifier: true,
+
+    // Enables generation of the `.o-divided-list--foo`
+    // modifier class outside of any media query.
+    foo: true,
+  ),
+  from-<bp-name>: (
+    // Enables generation of the `.o-divided-list--from-<bp-name>`
+    // class inside a min-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    no-modifier: true,
+
+    // Enables generation of the `.o-divided-list--foo--from-<bp-name>`
+    // class inside a min-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    foo: true,
+  ),
+  until-<bp-name>: (
+    // Enables generation of the `.o-divided-list--until-<bp-name>`
+    // class inside a max-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    no-modifier: true,
+
+    // Enables generation of the `.o-divided-list--foo--until-<bp-name>`
+    // class inside a max-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    foo: true,
+  ),
+  when-<bp-name>: (
+    // Enables generation of the `.o-divided-list--when-<bp-name>`
+    // class inside a misc media query
+    // defined ins `$jigsass-breakpoints.features`.
+    no-modifier: true,
+
+    // Enables generation of the `.o-divided-list--foo--when-<bp-name>`
+    // class inside a misc media query
+    // defined ins `$jigsass-breakpoints.features`.
+    foo: true,
+  ),
+  from-<bp-name>-until-<bp-name>: (...);
+  from-<bp-name>-when-<bp-name>: (...);
+  until-<bp-name>-when-<bp-name>: (...);
+  from-<bp-name>-until-<bp-name>-when-<bp-name>: (...);
+);
+```
+*/
+// stylelint-enable
+
+/// Configuration map for enabling generation of
+/// bare-list and bare-list modifier classes.
+/// ---
+/// @example
+///		$jigsass-list-bare-conf: (
+///    no-breakpoint: (
+///      no-modifier: true,  // Enables generation of the `.o-bare-list`
+///                          // class outside of any media query.
+///    ),
+///    from-<bp-name>: (
+///      no-modifier: true,  // Enables generation of the `.o-bare-list--from-<bp-name>`
+///                          // class inside a min-width media query
+///                          // defined ins `$jigsass-breakpoints.length`.
+///    ),
+///    until-<bp-name>: (
+///      no-modifier: true,  // Enables generation of the `.o-bare-list--until-<bp-name>`
+///                          // class inside a max-width media query
+///                          // defined ins `$jigsass-breakpoints.length`.
+///    ),
+///    when-<bp-name>: (
+///      no-modifier: true,  // Enables generation of the `.o-bare-list--when-<bp-name>`
+///                          // class inside a misc media query
+///                          // defined ins `$jigsass-breakpoints.features`.
+///    ),
+///    from-<bp-name>-until-<bp-name>: (...);
+///    from-<bp-name>-when-<bp-name>: (...);
+///    until-<bp-name>-when-<bp-name>: (...);
+///    from-<bp-name>-until-<bp-name>-when-<bp-name>: (...);
+///  );
+/// ---
+/// @type {Map}
+/// ---
+$jigsass-list-bare-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+  ),
+) !default;
+
+
+/// Configuration map for enabling generation of
+/// inline-list and inline-list modifier classes.
+/// ---
+/// @example
+///		$jigsass-list-inline-conf: (
+///    no-breakpoint: (
+///      // Enables generation of the `.o-inline-list`
+///      // class outside of any media query.
+///      no-modifier: true,
+///
+///      // Enables generation of the `.o-inline-list--spread`
+///      // modifier class outside of any media query.
+///      spread: true,
+///    ),
+///    from-<bp-name>: (
+///      // Enables generation of the `.o-inline-list--from-<bp-name>`
+///      // class inside a min-width media query
+///      // defined ins `$jigsass-breakpoints.length`.
+///      no-modifier: true,
+///
+///      // Enables generation of the `.o-inline-list--spread--from-<bp-name>`
+///      // class inside a min-width media query
+///      // defined ins `$jigsass-breakpoints.length`.
+///      spread: true,
+///    ),
+///    until-<bp-name>: (
+///      // Enables generation of the `.o-inline-list--until-<bp-name>`
+///      // class inside a max-width media query
+///      // defined ins `$jigsass-breakpoints.length`.
+///      no-modifier: true,
+///
+///      // Enables generation of the `.o-inline-list--spread--until-<bp-name>`
+///      // class inside a max-width media query
+///      // defined ins `$jigsass-breakpoints.length`.
+///      spread: true,
+///    ),
+///    when-<bp-name>: (
+///      // Enables generation of the `.o-inline-list--when-<bp-name>`
+///      // class inside a misc media query
+///      // defined ins `$jigsass-breakpoints.features`.
+///      no-modifier: true,
+///
+///      // Enables generation of the `.o-inline-list--spread--when-<bp-name>`
+///      // class inside a misc media query
+///      // defined ins `$jigsass-breakpoints.features`.
+///      spread: true,
+///    ),
+///    from-<bp-name>-until-<bp-name>: (...);
+///    from-<bp-name>-when-<bp-name>: (...);
+///    until-<bp-name>-when-<bp-name>: (...);
+///    from-<bp-name>-until-<bp-name>-when-<bp-name>: (...);
+///  );
+/// ---
+/// @type {Map}
+/// ---
+$jigsass-list-inline-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+    delimited: false,
+    split-first: false,
+    split-last: false,
+    spread: false,
+  ),
+) !default;
+
+
+/// Configuration map for enabling generation of
+/// divided-list and divided-list modifier classes.
+/// ---
+/// @example
+///		$jigsass-list-divided-conf: (
+///    no-breakpoint: (
+///      no-modifier: true,  // Enables generation of the `.o-divided-list`
+///                          // class outside of any media query.
+///      foo: true,          // Enables generation of the `.o-divided-list--foo`
+///                          // modifier class outside of any media query.
+///    ),
+///    from-<bp-name>: (
+///      no-modifier: true,  // Enables generation of the `.o-divided-list--from-<bp-name>`
+///                          // class inside a min-width media query
+///                          // defined ins `$jigsass-breakpoints.length`.
+///      foo: true,          // Enables generation of the `.o-divided-list--foo--from-<bp-name>`
+///                          // class inside a min-width media query
+///                          // defined ins `$jigsass-breakpoints.length`.
+///    ),
+///    until-<bp-name>: (
+///      no-modifier: true,  // Enables generation of the `.o-divided-list--until-<bp-name>`
+///                          // class inside a max-width media query
+///                          // defined ins `$jigsass-breakpoints.length`.
+///     foo: true,          // Enables generation of the `.o-divided-list--foo--until-<bp-name>`
+///                          // class inside a max-width media query
+///                          // defined ins `$jigsass-breakpoints.length`.
+///    ),
+///    when-<bp-name>: (
+///      no-modifier: true,  // Enables generation of the `.o-divided-list--when-<bp-name>`
+///                          // class inside a misc media query
+///                          // defined ins `$jigsass-breakpoints.features`.
+///      foo: true,          // Enables generation of the `.o-divided-list--foo--when-<bp-name>`
+///                          // class inside a misc media query
+///                          // defined ins `$jigsass-breakpoints.features`.
+///    ),
+///    from-<bp-name>-until-<bp-name>: (...);
+///    from-<bp-name>-when-<bp-name>: (...);
+///    until-<bp-name>-when-<bp-name>: (...);
+///    from-<bp-name>-until-<bp-name>-when-<bp-name>: (...);
+///  );
+/// ---
+/// @type {Map}
+/// ---
+$jigsass-list-divided-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+
+    // Enable border modifiers here,
+    // based on the ones defined in
+    // `$jigsass-lists-divided-border-modifiers`
+  ),
+) !default;
+
+
 
 // stylelint-disable
 /* ---
