@@ -24,12 +24,12 @@
 				</li>
 				
 				<li>
-					<a href="#configuration"><span>Configuration</span></a>
+					<a href="#css-outpout"><span>CSS Outpout</span></a>
 					
 				</li>
 				
 				<li>
-					<a href="#list-mixin"><span>List mixin</span></a>
+					<a href="#configuration"><span>Configuration</span></a>
 					
 				</li>
 				
@@ -102,61 +102,246 @@
 		<section id="introduction">
 			<h3>Introduction</h3>
 			<div>
-				<p><a href="https://npmjs.org/package/jigsass-objects-lists"><img src="https://badge.fury.io/js/jigsass-objects-lists.svg" alt="NPM version"></a>
-<a href="https://david-dm.org/TxHawks/jigsass-objects-lists"><img src="https://david-dm.org/TxHawks/jigsass-objects-lists.svg?theme=shields.io" alt="Dependency Status"></a></p>
-<p>JigSass Lists is a collection of unopinionated, unstyled, ui abstractions for displaying lists.</p>
+				<p>JigSass Lists is a collection of unopinionated, unstyled, ui abstractions for displaying lists.</p>
+<p><strong><a href="https://txhawks.github.io/jigsass-objects-lists">GitHub page</a></strong></p>
 <h2 id="installation">Installation</h2>
 <p>Using npm:</p>
 <pre><code class="lang-sh">npm i -S jigsass-objects-lists
 </code></pre>
 <h2 id="usage">Usage</h2>
-<p>First, you would need to import JigSass Lists:</p>
+<p>First, you need to import JigSass Lists into your stylesheet:</p>
 <pre><code class="lang-scss">@import &#39;path/to/jigsass-objects-lists/scss/index&#39;;
 </code></pre>
 <p>And optionally <a href="https://tinyurl.com/lists-config">reconfigure</a> the defaults to your liking.</p>
-<p>Provides the following list abstractions:</p>
+<p>JigSass Lists provides the following list abstractions:</p>
 <ul>
 <li><a href="https://txhawks.github.io/jigsass-objects-lists/#bare-lists">Bare list</a>: Unstyled lists.</li>
 <li><a href="https://txhawks.github.io/jigsass-objects-lists/#inline-lists">Inline list</a>: Inlined list items,
-placed side by side instead of stacked one on top of each other.</li>
+placed side by side instead of stacked one on top of another</li>
 <li><a href="https://txhawks.github.io/jigsass-objects-lists/#delimited-inline-lists">Delimited inline list</a>:
-Delimited an inline item by a configurable string</li>
+An inline list, in which items are delimited by a configurable string.</li>
 <li>Split inline list: Push the <a href="https://tinyurl.com/split-first">first</a> or
 <a href="https://tinyurl.com/split-last">last</a> list item away from the other items, to the edge of the container</li>
 <li><a href="https://txhawks.github.io/jigsass-objects-lists/#divided-lists">Divided list</a>:
 A vertically stacked list of items divided by horizontal rules.</li>
 </ul>
-<p>Like all other JigSass modules, JigSass Lists does not automatically generate any CSS when imported.
+<p>Like all other JigSass modules, JigSass List does not automatically generate any CSS when imported.
 In order to use its classes, you would have to first explicitly indicate your intention to use
-them, using the <a href="https://txhawks.github.io/jigsass-objects-lists/#list-mixin">jigsass-list</a> mixin.
-This way our css remains small and maintainable:</p>
-<pre><code class="lang-scss">@include jigsass-list($list-abstraction[, $modifier, $from-brekpoint, $until-breakpoint, $misc-breakpoint]);
-</code></pre>
+them by enabling their generation in the associated <a href="#css-output">configurations map</a>, Leaving
+us only with CSS we need.</p>
 <p>All JigSass List classes are responsive using <a href="https://txhawks.github.io/jigsass-tools-mq/">JigSass MQ</a>
 and the breakpoints defined in
 <code>[$jigsass-breakpoints](https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints)</code>.</p>
-<p>Based on the arguments passed to the jigsass-list mixin, responsive modifiers are generated according
-to the following logic:</p>
+<p>Based enabled selectors in the <a href="#css-output">configuration map</a>, responsive modifiers are
+generated according to the following logic:</p>
 <pre><code class="lang-scss">.o-&lt;list-abstraction&gt;--modifier[-[-from-{breakpoint-name}][-until-{breakpoint-name}][-misc-{breakpoint-name}]]
 </code></pre>
 <p>So, assuming the <code>medium</code>, <code>large</code> and <code>landscape</code> breakpoints are defined in <code>$jigsass-breakpoints</code>
 as <code>600px</code>, <code>1024px</code> and <code>(orientation: landscape)</code> respectively,</p>
-<pre><code class="lang-scss">@include jigsass-list(inline, $modifier: split-first);
+<pre><code class="lang-scss">$jigsass-list-inline-conf: (
+  no-breakpoint: (
+    split-first: true,
+  ),
+  until-medium: (
+    split-first: true,
+  ),
+  from-large-when-landscape: (
+    split-first: true,
+  ),
+)
 </code></pre>
-<p>will generate the <code>.o-inline-list--split-first</code> class, which is the default, and is not limited to any media-query.</p>
-<pre><code class="lang-scss">@include jigsass-list(inline, $modifier: split-first, $until: medium);
-</code></pre>
-<p>will generate the <code>.o-inline-list--split-first--until-medium</code> class, which will be in effect at
-<code>(max-width: 37.49em)</code> and will override styles in the default class until that point.</p>
-<pre><code class="lang-scss">@include jigsass-list(inline, $modifier: split-first, $from: large, $misc: landscape);
-</code></pre>
-<p>will generate the <code>.o-inline-list--split-first--from-large-when-landscape</code> class, which will go into
-effect at <code>(min-width: 64em) and (orientation: landscape)</code> and will override styles in the default
-class under these  conditions.</p>
-<p>Regardless of how many times a class is included, or where, it will only be generated once,
-where the <code>jigsass-objects-items</code> partial was imported, leaving us with a css file as small
-as possible, and a predictable cascade.</p>
+<p>will generate the following classes:</p>
+<ul>
+<li><code>.o-inline-list--split-first</code>, which is not limited to any media-query.</li>
+<li><code>.o-inline-list--split-first--until-medium</code>, which will be in effect at
+<code>(max-width: 37.49em)</code> and will override styles in the default class
+until that point.</li>
+<li><code>.o-inline-list--split-first--from-large-when-landscape</code>, which will go
+into effect at <code>(min-width: 64em) and (orientation: landscape)</code> and
+will override styles in the default class under these  conditions.</li>
+</ul>
 <p><strong>License:</strong> MIT</p>
+
+				
+			</div>
+		</section>
+		
+		<section id="css-outpout">
+			<h3>CSS Outpout</h3>
+			<div>
+				<p>By default, JigSass Lists does not generate any CSS output when imported into
+a stylesheet. CSS output must be enabled on a per-selector basis, inside the
+dedicated configuration maps:</p>
+<h4 id="bare-list-and-modifier-classes">Bare list and modifier classes</h4>
+<pre><code class="lang-scss">$jigsass-list-bare-conf
+</code></pre>
+<p><strong>Type:</strong> <code>Map</code></p>
+<p>Configuration map for enabling generation of
+bare-list and bare-list modifier classes.</p>
+<p><strong>Default:</strong></p>
+<pre><code class="lang-scss">$jigsass-list-bare-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+  ),
+);
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-scss">$jigsass-list-bare-conf: (
+  no-breakpoint: (
+    no-modifier: true,  // Enables generation of the `.o-bare-list`
+                        // class outside of any media query.
+  ),
+  from-&lt;bp-name&gt;: (
+    no-modifier: true,  // Enables generation of the `.o-bare-list--from-&lt;bp-name&gt;`
+                        // class inside a min-width media query
+                        // defined ins `$jigsass-breakpoints.length`.
+  ),
+  until-&lt;bp-name&gt;: (
+    no-modifier: true,  // Enables generation of the `.o-bare-list--until-&lt;bp-name&gt;`
+                        // class inside a max-width media query
+                        // defined ins `$jigsass-breakpoints.length`.
+  ),
+  when-&lt;bp-name&gt;: (
+    no-modifier: true,  // Enables generation of the `.o-bare-list--when-&lt;bp-name&gt;`
+                        // class inside a misc media query
+                        // defined ins `$jigsass-breakpoints.features`.
+  ),
+  from-&lt;bp-name&gt;-until-&lt;bp-name&gt;: (...);
+  from-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+  until-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+  from-&lt;bp-name&gt;-until-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+);
+</code></pre>
+<h4 id="inline-list-and-modifier-classes">Inline list and modifier classes</h4>
+<pre><code class="lang-scss">$jigsass-list-inline-conf
+</code></pre>
+<p><strong>Type:</strong> <code>Map</code></p>
+<p>Configuration map for enabling generation of
+inline-list and inline-list modifier classes.</p>
+<p><strong>Default:</strong></p>
+<pre><code class="lang-scss">$jigsass-list-inline-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+    delimited: false,
+    split-first: false,
+    split-last: false,
+    spread: false,
+  ),
+);
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-scss">$jigsass-list-inline-conf: (
+  no-breakpoint: (
+    // Enables generation of the `.o-inline-list`
+    // class outside of any media query.
+    no-modifier: true,
+    // Enables generation of the `.o-inline-list--spread`
+    // modifier class outside of any media query.
+    spread: true,
+  ),
+  from-&lt;bp-name&gt;: (
+    // Enables generation of the `.o-inline-list--from-&lt;bp-name&gt;`
+    // class inside a min-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    no-modifier: true,
+    // Enables generation of the `.o-inline-list--spread--from-&lt;bp-name&gt;`
+    // class inside a min-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    spread: true,
+  ),
+  until-&lt;bp-name&gt;: (
+    // Enables generation of the `.o-inline-list--until-&lt;bp-name&gt;`
+    // class inside a max-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    no-modifier: true,
+    // Enables generation of the `.o-inline-list--spread--until-&lt;bp-name&gt;`
+    // class inside a max-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    spread: true,
+  ),
+  when-&lt;bp-name&gt;: (
+    // Enables generation of the `.o-inline-list--when-&lt;bp-name&gt;`
+    // class inside a misc media query
+    // defined ins `$jigsass-breakpoints.features`.
+    no-modifier: true,
+    // Enables generation of the `.o-inline-list--spread--when-&lt;bp-name&gt;`
+    // class inside a misc media query
+    // defined ins `$jigsass-breakpoints.features`.
+    spread: true,
+  ),
+  from-&lt;bp-name&gt;-until-&lt;bp-name&gt;: (...);
+  from-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+  until-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+  from-&lt;bp-name&gt;-until-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+);
+</code></pre>
+<h4 id="divided-list-and-modifier-classes">Divided list and modifier classes</h4>
+<pre><code class="lang-scss">$jigsass-list-divided-conf
+</code></pre>
+<p><strong>Type:</strong> <code>Map</code></p>
+<p>Configuration map for enabling generation of
+divided-list and divided-list modifier classes.</p>
+<p><strong>Default:</strong></p>
+<pre><code class="lang-scss">$jigsass-list-divided-conf: (
+  no-breakpoint: (
+    no-modifier: false,
+
+    // Enable border modifiers here,
+    // based on the ones defined in
+    // `$jigsass-lists-divided-border-modifiers`
+  ),
+);
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code class="lang-scss">$jigsass-list-divided-conf: (
+  no-breakpoint: (
+    // Enables generation of the `.o-divided-list`
+    // class outside of any media query.
+    no-modifier: true,
+
+    // Enables generation of the `.o-divided-list--foo`
+    // modifier class outside of any media query.
+    foo: true,
+  ),
+  from-&lt;bp-name&gt;: (
+    // Enables generation of the `.o-divided-list--from-&lt;bp-name&gt;`
+    // class inside a min-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    no-modifier: true,
+
+    // Enables generation of the `.o-divided-list--foo--from-&lt;bp-name&gt;`
+    // class inside a min-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    foo: true,
+  ),
+  until-&lt;bp-name&gt;: (
+    // Enables generation of the `.o-divided-list--until-&lt;bp-name&gt;`
+    // class inside a max-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    no-modifier: true,
+
+    // Enables generation of the `.o-divided-list--foo--until-&lt;bp-name&gt;`
+    // class inside a max-width media query
+    // defined ins `$jigsass-breakpoints.length`.
+    foo: true,
+  ),
+  when-&lt;bp-name&gt;: (
+    // Enables generation of the `.o-divided-list--when-&lt;bp-name&gt;`
+    // class inside a misc media query
+    // defined ins `$jigsass-breakpoints.features`.
+    no-modifier: true,
+
+    // Enables generation of the `.o-divided-list--foo--when-&lt;bp-name&gt;`
+    // class inside a misc media query
+    // defined ins `$jigsass-breakpoints.features`.
+    foo: true,
+  ),
+  from-&lt;bp-name&gt;-until-&lt;bp-name&gt;: (...);
+  from-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+  until-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+  from-&lt;bp-name&gt;-until-&lt;bp-name&gt;-when-&lt;bp-name&gt;: (...);
+);
+</code></pre>
 
 				
 			</div>
@@ -217,81 +402,10 @@ list in the same format used in <code>[$jigsass-lists-divided-border](#jigsass-l
 			</div>
 		</section>
 		
-		<section id="list-mixin">
-			<h3>List mixin</h3>
-			<div>
-				<pre><code class="lang-scss">@mixin jigsass-list($abstraction, $modifier: false, $from: false, $until: false, $misc: false) { ... }
-</code></pre>
-<h4 id="description">Description</h4>
-<p>Generate a list abstraction or an abstraction&#39;s modifier,
-optionally limited to a specific breakpoint defined in
-<a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="parameters">Parameters</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Type</th>
-<th>Default Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>$abstraction</code></td>
-<td>A list abstraction (e.g., <code>bare</code>, <code>inline</code>, etc.)</td>
-<td><code>String</code></td>
-</tr>
-<tr>
-<td><code>$modifier</code></td>
-<td>A list-abstraction&#39;s modifier, e.g., <code>bare</code>, <code>inline</code>, etc.</td>
-<td><code>String</code> or <code>Boolean</code></td>
-<td>false</td>
-</tr>
-<tr>
-<td><code>$from</code></td>
-<td>The name of breakpoint used as the min-width condition</td>
-<td><code>String</code> or <code>Boolean</code></td>
-<td>false</td>
-</tr>
-<tr>
-<td><code>$until</code></td>
-<td>The name of breakpoint used as the max-width condition</td>
-<td><code>String</code> or <code>Boolean</code></td>
-<td>false</td>
-</tr>
-<tr>
-<td><code>$misc</code></td>
-<td>The name of a miscellaneous media query condition</td>
-<td><code>String</code> or <code>Boolean</code></td>
-<td>false</td>
-</tr>
-</tbody>
-</table>
-<h4 id="example">Example</h4>
-<pre><code class="lang-scss">@include jigsass-list(inline, $from: medium);
-</code></pre>
-<p>Will generate:</p>
-<pre><code class="lang-scss">@media (min-width: 37.5em) {
-  .o-inline-list--from-medium { ... }
-}
-</code></pre>
-
-				
-			</div>
-		</section>
-		
 		<section id="bare-list">
 			<h3>Bare List</h3>
 			<div>
 				<p>Strip lists of their default decoration (bullets, numbers, etc.) and spacing.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(bare[$modifier, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
 <h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;bare-list&#39;&gt;
     &lt;li&gt;item 1&lt;/li&gt;
@@ -300,9 +414,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li&gt;item 4&lt;/li&gt;
     &lt;li&gt;item 5&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(bare);
 </code></pre>
 <p>  <strong> CSS output: </strong></p>
 <pre><code class="lang-scss">  // --- CSS --- //
@@ -319,13 +430,6 @@ optionally limited to a specific breakpoint defined in
 			<h3>Inline List</h3>
 			<div>
 				<p>Place list (or fuax-list) elements side by side instead of stacked one on top of each other.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(inline[$modifier, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
 <h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;inline-list&#39;&gt;
     &lt;li&gt;item 1&lt;/li&gt;
@@ -334,9 +438,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li&gt;item 4&lt;/li&gt;
     &lt;li&gt;item 5&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(inline);
 </code></pre>
 <p>  <strong> CSS output: </strong></p>
 <pre><code class="lang-scss">  // --- CSS --- //
@@ -355,14 +456,10 @@ optionally limited to a specific breakpoint defined in
 				<p>Delimit an inline-list by the string defined in <code>$jigsass-lists-inline-delimiter</code></p>
 <p>  Override the delimiter of individual list items by setting the <code>data-jigsass-delimiter</code>
   property in the HTML to the overriding delimitier:</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(inline, delimited[, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="usage-example-">Usage example:</h4>
+<h4 id="related-variables">Related Variables</h4>
+<pre><code>- `$jigsass-lists-inline-delimiter` (default: `&#39;\2002|\2002&#39;`):
+  The default delimiter to use with `.o-inline-list--delimited`.
+</code></pre><h4 id="usage-example">Usage example</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;[ o-inline-list o-inline-list--delimited ]&#39;&gt;
     &lt;li data-jigsass-delimiter=&#39;:&amp;nbsp;&#39;&gt;&lt;strong&gt;Default delimiters&lt;/strong&gt;&lt;/li&gt;
     &lt;li&gt;item 2&lt;/li&gt;
@@ -378,9 +475,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li data-jigsass-delimiter=&#39;,&amp;nbsp&#39;&gt;item 4&lt;/li&gt;
     &lt;li data-jigsass-delimiter=&#39;,&amp;nbsp&#39;&gt;item 5&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(inline, $modifier: delimited);
 </code></pre>
 <p>  <strong> CSS output: </strong></p>
 <pre><code class="lang-scss">  // --- CSS --- //
@@ -418,14 +512,16 @@ optionally limited to a specific breakpoint defined in
 			<h3>Split Inline List (first)</h3>
 			<div>
 				<p>Push all items in an inline list past the first one to the horizontal end of the container.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(inline, split-first[, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="usage-example-">Usage example:</h4>
+<h4 id="related-variables">Related Variables</h4>
+<pre><code>- &#39;$jigsass-lists-flexbox&#39; (default: true):
+  Determines if flexbox should be enables, where relevant
+- &#39;$jigsass-lists-flexbox-fallback&#39; (default: &#39;no-flexbox&#39;):
+  Determines if flexbox fallback should be included and the qualifier class
+  to use if so (e.g, `.no-flexbox` when using Modernizr defaults)
+  Set to `false` to disable fallback altogether, and to a class-name
+  (sans the leading `.`) used as the qualifier class if fallback is
+  desirable.
+</code></pre><h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;u-maw--600px [ fpo fpo--b ]  [ o-inline-list o-inline-list--split-first ]&#39;&gt;
   &lt;li&gt;&lt;strong&gt;Pushed to the edge&lt;/strong&gt;&lt;/li&gt;
     &lt;li&gt;item 2&lt;/li&gt;
@@ -433,9 +529,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li&gt;item 4&lt;/li&gt;
     &lt;li&gt;item 5&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(inline, $modifier: split-first);
 </code></pre>
 <p>  <strong> CSS output: </strong></p>
 <pre><code class="lang-scss">  // --- CSS --- //
@@ -492,14 +585,16 @@ optionally limited to a specific breakpoint defined in
 			<h3>Split Inline List (last)</h3>
 			<div>
 				<p>Push the last item in an inline list to the horizontal end of the container.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(inline, split-last[, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="usage-example-">Usage example:</h4>
+<h4 id="related-variables">Related Variables</h4>
+<pre><code>- &#39;$jigsass-lists-flexbox&#39; (default: true):
+  Determines if flexbox should be enables, where relevant
+- &#39;$jigsass-lists-flexbox-fallback&#39; (default: &#39;no-flexbox&#39;):
+  Determines if flexbox fallback should be included and the qualifier class
+  to use if so (e.g, `.no-flexbox` when using Modernizr defaults)
+  Set to `false` to disable fallback altogether, and to a class-name
+  (sans the leading `.`) used as the qualifier class if fallback is
+  desirable.
+</code></pre><h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;u-maw--600px [ fpo fpo--b ]  [ o-inline-list o-inline-list--split-last ]&#39;&gt;
     &lt;li&gt;item 1&lt;/li&gt;
     &lt;li&gt;item 2&lt;/li&gt;
@@ -507,9 +602,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li&gt;item 4&lt;/li&gt;
     &lt;li&gt;&lt;strong&gt;Pushed to the edge&lt;/strong&gt;&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(inline, $modifier: split-last);
 </code></pre>
 <p>  <strong> CSS output: </strong></p>
 <pre><code class="lang-scss">  // --- CSS --- //
@@ -570,14 +662,16 @@ optionally limited to a specific breakpoint defined in
 				<p>// Equally spread list items to fill the full (fluid)
   // width of their container
   Push all items in an inline list past the first one to the horizontal end of the container.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(inline, spread[, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="usage-example-">Usage example:</h4>
+<h4 id="related-variables">Related Variables</h4>
+<pre><code>- &#39;$jigsass-lists-flexbox&#39; (default: true):
+  Determines if flexbox should be enables, where relevant
+- &#39;$jigsass-lists-flexbox-fallback&#39; (default: &#39;no-flexbox&#39;):
+  Determines if flexbox fallback should be included and the qualifier class
+  to use if so (e.g, `.no-flexbox` when using Modernizr defaults)
+  Set to `false` to disable fallback altogether, and to a class-name
+  (sans the leading `.`) used as the qualifier class if fallback is
+  desirable.
+</code></pre><h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;[ o-inline-list o-inline-list--spread ]&#39;&gt;
     &lt;li class=&#39;fpo&#39;&gt;item 1&lt;/li&gt;
     &lt;li class=&#39;fpo&#39;&gt;item 2&lt;/li&gt;
@@ -587,9 +681,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li class=&#39;fpo&#39;&gt;item 3&lt;/li&gt;
     &lt;li class=&#39;fpo&#39;&gt;item 4&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(inline, $modifier: spread);
 </code></pre>
 <p>  <strong> CSS output: </strong></p>
 <pre><code class="lang-scss">  // --- CSS --- //
@@ -638,14 +729,21 @@ optionally limited to a specific breakpoint defined in
 <p>  This object sets only very minimal styling and relies on being complemented with
   component and utility classes, e.g., <a href="https:txhawks.github.io/jigsass-utils-autospace/"><code>.u-as</code></a>
   for spacing items from one another.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(divided[, $modifier, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="usage-example-">Usage example:</h4>
+<h4 id="related-variables-">Related variables:</h4>
+<pre><code>- `$jigsass-lists-divided-border-modifiers` (default: `1px 2 solid`):
+A list of arguments for the `[jigsass-border-top](http://tinyurl.com/js-border-top)` mixin in the following order:
+  - A number in pixels. The border&#39;s width.
+  - A unitless number. The number of
+  [typographic lines](https://txhawks.github.io/jigsass-tools-typography/) occupied
+  by the border and padding added together.
+  - A string. The border&#39;s style (e.g., `solid`, `dotted`, etc.).
+
+
+
+  Border modifiers for divided lists.
+  A map where each key is a modifier&#39;s name and its value is a
+  list in the same format used in [$jigsass-lists-divided-border](divided-lists-border-defaults).
+</code></pre><h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;u-as--2 o-divided-list&#39;&gt;
     &lt;li&gt;item 1&lt;/li&gt;
     &lt;li&gt;item 2&lt;/li&gt;
@@ -653,9 +751,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li&gt;item 4&lt;/li&gt;
     &lt;li&gt;item 5&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(divided);
 </code></pre>
 <p>  <strong> CSS output: </strong></p>
 <pre><code class="lang-scss">  // --- CSS --- //
@@ -676,14 +771,12 @@ optionally limited to a specific breakpoint defined in
 			<h3>Divided List (tight)</h3>
 			<div>
 				<p>Modifies the default border and padding above list items in a <code>devided-list</code>.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(divided, $modifier: tight[, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="usage-example-">Usage example:</h4>
+<h4 id="related-variables-">Related variables:</h4>
+<pre><code>- `$jigsass-lists-divided-border-modifiers` (default: `1px 2 solid`):
+  Border modifiers for divided lists.
+  A map where each key is a modifier&#39;s name and its value is a
+  list in the same format used in [$jigsass-lists-divided-border](divided-lists-border-defaults).
+</code></pre><h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;u-as--1  [ o-divided-list o-divided-list--tight ]&#39;&gt;
     &lt;li&gt;item 1&lt;/li&gt;
     &lt;li&gt;item 2&lt;/li&gt;
@@ -691,9 +784,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li&gt;item 4&lt;/li&gt;
     &lt;li&gt;item 5&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(divided, $modifier: tight);
 </code></pre>
 
 				
@@ -704,14 +794,12 @@ optionally limited to a specific breakpoint defined in
 			<h3>Divided List (loose)</h3>
 			<div>
 				<p>Modifies the default border and padding above list items in a <code>devided-list</code>.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(divided, $modifier: loose[, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="usage-example-">Usage example:</h4>
+<h4 id="related-variables-">Related variables:</h4>
+<pre><code>- `$jigsass-lists-divided-border-modifiers` (default: `1px 2 solid`):
+  Border modifiers for divided lists.
+  A map where each key is a modifier&#39;s name and its value is a
+  list in the same format used in [$jigsass-lists-divided-border](divided-lists-border-defaults).
+</code></pre><h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;u-as--4  [ o-divided-list o-divided-list--loose ]&#39;&gt;
     &lt;li&gt;item 1&lt;/li&gt;
     &lt;li&gt;item 2&lt;/li&gt;
@@ -719,9 +807,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li&gt;item 4&lt;/li&gt;
     &lt;li&gt;item 5&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(divided, $modifier: loose);
 </code></pre>
 
 				
@@ -732,14 +817,12 @@ optionally limited to a specific breakpoint defined in
 			<h3>Divided List (x-loose)</h3>
 			<div>
 				<p>Modifies the default border and padding above list items in a <code>devided-list</code>.</p>
-<h4 id="include-with-">include with:</h4>
-<pre><code class="lang-scss">  @include jigsass-list(divided, $modifier: x-loose[, $from, $until, $misc]);
-</code></pre>
-<h4 id="related-mixins-">Related Mixins:</h4>
-<p>  <a href="#list-mixin">jigsass-list</a>: Generates a list abstraction or an abstraction&#39;s modifier,
-  optionally limited to a specific breakpoint defined in
-  <a href="https://txhawks.github.io/jigsass-tools-mq/#variable-jigsass-breakpoints">$jigsass-breakpoints</a>).</p>
-<h4 id="usage-example-">Usage example:</h4>
+<h4 id="related-variables-">Related variables:</h4>
+<pre><code>- `$jigsass-lists-divided-border-modifiers` (default: `1px 2 solid`):
+  Border modifiers for divided lists.
+  A map where each key is a modifier&#39;s name and its value is a
+  list in the same format used in [$jigsass-lists-divided-border](divided-lists-border-defaults).
+</code></pre><h4 id="usage-example-">Usage example:</h4>
 <pre><code class="lang-example:html">  &lt;ul class=&#39;u-as--8  [ o-divided-list o-divided-list--x-loose ]&#39;&gt;
     &lt;li&gt;item 1&lt;/li&gt;
     &lt;li&gt;item 2&lt;/li&gt;
@@ -747,9 +830,6 @@ optionally limited to a specific breakpoint defined in
     &lt;li&gt;item 4&lt;/li&gt;
     &lt;li&gt;item 5&lt;/li&gt;
   &lt;/ul&gt;
-</code></pre>
-<pre><code class="lang-scss">  // --- In Sass --- //
-  @include jigsass-list(divided, $modifier: x-loose);
 </code></pre>
 
 				
@@ -759,7 +839,7 @@ optionally limited to a specific breakpoint defined in
 			</div>
 		</section>
 		
-	<footer>Last modified Tuesday, 5 April 2016 20:27</footer>
+	<footer>Last modified Friday, 22 April 2016 21:19</footer>
 </main>
 <script src="prism.js"></script>
 <script src="examples.js"></script>
